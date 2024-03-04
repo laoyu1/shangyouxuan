@@ -166,11 +166,11 @@
         .contentMain {
             width: 1200px;
             margin: 15px auto 0 auto;
-            font-size: 0;
 
             // 路径导航开始
             #navPath {
                 padding: 9px 15px 9px 0;
+                font-size: 0;
 
                 a {
                     font-size: 12px;
@@ -222,6 +222,7 @@
                                 position: absolute;
                                 left: 0;
                                 top: 0;
+                                display: none;
                             }
 
                         }
@@ -234,7 +235,8 @@
                             position: absolute;
                             left: 420px;
                             top: 0;
-                            
+                            display: none;
+
                             overflow: hidden;
 
                             // 大图片
@@ -244,6 +246,189 @@
                                 position: absolute;
                                 top: 0;
                                 left: 0;
+                            }
+                        }
+                    }
+
+                    // 下边
+                    #leftBottom {
+                        width: 400px;
+                        margin-top: 5px;
+                        font-size: 12px;
+
+                        a {
+                            width: 10px;
+                            height: 54px;
+                            border: 1px solid #ccc;
+                            background: #ebebeb;
+                            text-align: center;
+                            line-height: 54px;
+                            float: left;
+
+                            &:first-child {
+                                margin-right: 4px;
+                            }
+                        }
+
+                        #piclist {
+                            width: 372px;
+                            height: 56px;
+                            float: left;
+                            overflow: hidden;
+                            position: relative;
+
+                            ul {
+                                white-space: nowrap;
+                                font-size: 0px;
+                                position: absolute;
+                                transition: 0.5s;
+
+                                li {
+                                    width: 50px;
+                                    height: 50px;
+                                    border: 1px solid #ccc;
+                                    padding: 2px;
+                                    margin-right: 20px;
+                                    display: inline-block;
+
+                                    img {
+                                        width: 50px;
+                                        height: 50px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // 右侧商品详情区域开始
+                .right {
+                    width: 700px;
+                    float: right;
+
+                    // height: 500px;
+                    // background-color: red;
+                    // 商品详情数据结构开始
+                    .rightTop {
+                        h3 {
+                            font-size: 14px;
+                            line-height: 12px;
+                            margin-top: 15px;
+                        }
+
+                        >p {
+                            color: #e12228;
+                            margin-top: 15px;
+                        }
+
+                        .priceWrap {
+                            margin-top: 10px;
+                            line-height: 28px;
+                            background: #fee9ec;
+                            padding: 7px;
+
+                            .priceTop {
+                                .clearfix();
+
+                                // 价格
+                                >span {
+                                    margin-right: 15px;
+
+                                    float: left;
+                                }
+
+                                // 中间
+                                .price {
+                                    float: left;
+                                    color: #cc1122;
+
+                                    >span {
+                                        font-size: 16px;
+                                        float: left;
+                                    }
+
+                                    p {
+                                        font-size: 24px;
+                                        float: left;
+                                        font-weight: bold;
+                                        // color: #cc1122;
+
+                                    }
+
+                                    i {
+                                        font-size: 12px;
+                                        // color: #cc1122;
+                                        float: left;
+                                    }
+                                }
+
+                                // 累计评价
+                                >p {
+                                    float: right;
+
+                                    >span {}
+                                }
+                            }
+
+                            .priceBottom {
+                                .clearfix();
+
+                                >span {
+                                    float: left;
+                                    margin-right: 15px;
+                                }
+
+                                p {
+                                    float: left;
+                                    width: 520px;
+                                    line-height: 28px;
+
+                                    >span {
+                                        color: #999;
+
+                                        &:first-child {
+                                            background: #c81623;
+                                            color: #fff;
+                                            padding: 3px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .support {
+                            margin-top: 10px;
+                            line-height: 28px;
+                            .clearfix();
+
+                            >span {
+                                float: left;
+                                margin-right: 15px;
+                            }
+
+                            >p {
+                                float: left;
+                                width: 520px;
+                                color: #999;
+                            }
+                        }
+
+                        .address {
+                            margin-top: 10px;
+                            line-height: 28px;
+                            border-bottom: 1px solid #ededed;
+                            padding-bottom: 5px;
+                            .clearfix();
+
+                            > span {
+                                float: left;
+                                margin-right: 15px;
+                            }
+
+                            > p {
+                                float: left;
+                                width: 520px;
+                                color: #999;
                             }
                         }
                     }
