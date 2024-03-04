@@ -305,8 +305,261 @@ window.onload = function () {
 
     // #endregion
 
+    // #region 商品参数数据动态渲染
+    rightBottomData()
+    function rightBottomData() {
+        /**
+         * 思路
+         * 1. 找rightBottom的元素对象
+         * 2. 查找 data.js -> goodData/goodsDetail.crumData 数据
+         * 3. 由于数据是一个数组，需要遍历，有一个元素则需要一个动态的dl元素对象（dt, dd)
+         * 
+         */
+
+        // 查找元素对象
+        const chooseWrap = document.querySelector('#wrapper #content .contentMain #center .right .rightBottom .chooseWrap')
 
 
+        // 查找数据
+        let crumbData = goodData.goodsDetail.crumbData
+
+
+        // 循环数据
+        for (let i = 0; i < crumbData.length; i++) {
+
+            // 创建dl，dt元素对象
+            const dlNode = document.createElement('dl')
+            const dtNode = document.createElement('dt')
+
+            //设置dt的值为数组中的title的值
+            dtNode.innerHTML = crumbData[i].title;
+            //让dl追加dt元素
+            dlNode.appendChild(dtNode);
+
+            // 遍历 dd  crumbData->data 元素
+            for (let j = 0; j < crumbData[i].data.length; j++) {
+                const ddNode = document.createElement('dd')
+
+                ddNode.innerHTML = crumbData[i].data[j].type
+                ddNode.setAttribute('price', crumbData[i].data[j].changePrice)
+
+                dlNode.appendChild(ddNode)
+            }
+
+            chooseWrap.appendChild(dlNode)
+
+        }
+    }
+
+
+    // #endregion
+
+    // #region 点击商品参数之后的颜色排他效果
+    clickddBind()
+    function clickddBind() {
+        /**
+         * 思路
+         * 1. 获取所有的 dl 元素， 取其中第一个 dl 元素下的所有 dd 先做测试
+         *      测试完毕之后在对应 dl 第一行下标的前面嵌套一个 for 循环 目的在变换下标
+         * 2. 循环所有的 dd 元素并且添加点击事件
+         * 3. 确定实际发生事件的目标源对象设置其文字颜色为红色，然后给其他所有的元素颜色都重置为基础颜色
+         * 
+         * 
+         * 
+         * 点击 dd 之后产生的 mark 标记
+         * 思路：
+         * 1. 首先创建一个可以容纳点击的 dd 元素值的容器（数组），确定数组的起始长度
+         * 2. 然后将点击得 dd 元素的值按照对应下标来写入到数组的元素上
+         */
+
+        // 找第一个 dl 下的所有的 dd 元素
+        const dlNodes = document.querySelectorAll('#wrapper #content .contentMain #center .right .rightBottom .chooseWrap dl')
+        const ddNodes = dlNodes[0].querySelectorAll('dd')
+        const choose = document.querySelector('#wrapper #content .contentMain #center .right .rightBottom .choose')
+
+        let arr = new Array(dlNodes.length);
+
+        // 用 0 填充数组
+        arr.fill(0) //[0, 0, 0, 0]j
+        // console.log(ddNodes);
+        for (let i = 0; i< dlNodes.length; i++) {
+            const ddNodes = dlNodes[i].querySelectorAll('dd')
+            // 遍历当前所有 dd 元素
+            for (let j = 0; j < ddNodes.length; j++) {
+                ddNodes[j].onclick = function () {
+
+                    // 清空 choose 元素
+                    choose.innerHTML = ""
+
+                    // console.log(ddNodes[i]);
+                    for (let k = 0; k < ddNodes.length; k++) {
+                        ddNodes[k].style.color = "#666"
+                    }
+
+                    ddNodes[j].style.color = "red"
+
+                    // 点击哪一个 dd 元素动态产生一个新的 mark 标记元素 
+                    arr[i] = this
+                    changePriceBind(arr)     
+                    // console.log(arr);  
+                    
+                    // 遍历 arr 数组，将非 0 元素的值写入到mark标记
+                    arr.forEach(function(value, index){
+                        // 只要为真，就动态创建mark标签
+                        if(value){
+                            const markDiv = document.createElement('div')
+                            const aNode = document.createElement('a')
+                            
+                            markDiv.id = 'mark'
+                            markDiv.innerHTML = value.innerText
+                           
+                            aNode.innerText = 'X'
+                            aNode.setAttribute('index', index)
+                           
+                            markDiv.appendChild(aNode)
+                            choose.appendChild(markDiv)
+                        }
+
+                    })
+
+                    // 获取所有 a 标签元素，并且循环发生点击事件
+                    const aNodes = document.querySelectorAll('#wrapper #content .contentMain #center .right .rightBottom .choose #mark a')
+                    console.log(aNodes);
+                    for(let n = 0; n < aNodes.length; n++){
+                        aNodes[n].onclick = function(){
+                            // 获取点击的 a 标签身上的 index 属性值
+                            const idx1 = this.getAttribute('index')
+
+                            // 恢复数组中对应下标元素的值
+                            arr[idx1] = 0
+
+                            // 查找对应下标的那个 dl 行中的所有 dd 元素
+                            const ddlist = dlNodes[idx1].querySelectorAll('dd')
+
+                            // 遍历所有的 dd 元素
+                            for (let m = 0; m < ddlist.length; m++){
+                                // 其余所有 dd 的文字颜色为灰色
+                                ddlist[m].style.color = "#666"
+                            }
+
+                            // 默认的第一个 dd 文字颜色恢复成红色
+                            ddlist[0].style.color = "red"
+
+                            // 删除对应下标位置的 mark 标记
+                            choose.removeChild(this.parentNode)
+
+                            // 调用价格函数
+                            changePriceBind(arr)
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    // #endregion
+
+
+    // #region 价格变动的函数声明
+    /**
+     * 这个函数是需要在点击 dd 的时候以及删除 mark 标记的时候才需要调用
+     */
+    function changePriceBind(arr){
+        /**
+         * 思路
+         * 1. 获取价格标签元素
+         * 2. 给每个 dd 标签身上都默认都设置一个自定义的属性，用来记录变化的价格
+         * 3. 遍历 arr 数组，将 dd 元素身上的新变化的价格和已有的价格（5299）相加
+         * 4. 最后将计算之后的结果重新渲染到 p 标签中
+         */
+
+        // 原价格标签元素
+        const oldPrice = document.querySelector('#wrapper #content .contentMain #center .right .rightTop .priceWrap .priceTop .price p')
+        
+        // 取出默认的价格
+        let price = goodData.goodsDetail.price
+
+        // 遍历 arr 数组
+        for(let i = 0; i < arr.length; i++){
+            
+            if(arr[i]){
+                // 数据类型强制转换
+                let changeprice = Number(arr[i].getAttribute('price'))
+                
+                // 最终价格
+                price += changeprice  
+            }
+            // console.log(arr[i]);
+        }
+        oldPrice.innerHTML = price
+
+        // 将变化后的价格写入到左侧标签中
+        const leftprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .left p')
+        
+        leftprice.innerText = '￥' + price
+
+        // 遍历选择搭配中所有的复选框元素，看是否有选中的
+        const ipts = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .middle li input')
+        const newprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .right > i')
+
+        for(let j = 0; j < ipts.length; j++){
+            if(ipts[j].checked){
+                price+=Number(ipts[j].value)
+            }
+        }
+
+        // 右侧的套餐价价格重新渲染
+        newprice.innerHTML = '￥' + price
+
+
+    
+    }
+
+
+
+    // #endregion
+
+    // #region 选择搭配中间区域复选框选中套餐价变动效果
+    chooseprice()
+    function chooseprice(){
+        /**
+         * 思路
+         * 1. 先获取中间区域中所有的复选框元素
+         * 2. 遍历这些元素取出他们的价格，和左侧的基础价格价格进行累加，累加之后重新计算
+         * 
+         */
+
+        // 1. 先获取复选框元素
+        const ipts = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .middle li input')
+        const leftprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .left p')
+        const newprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .right > i')
+        console.log(ipts);
+        console.log(leftprice);
+        console.log(newprice);
+
+
+        // 2. 遍历复选框
+        for(let i = 0; i < ipts.length; i++){
+            ipts[i].onclick = function(){
+                let oldprice = Number(leftprice.innerText.slice(1))
+                for(let j = 0; j < ipts.length; j++){
+                    if(ipts[j].checked){
+
+                        // 新的价格 = 左侧价格 + 复选框复加价格
+                        oldprice = oldprice + Number(ipts[j].value)
+                    }
+                }
+
+                // 重新写回到套餐价标签中
+                newprice.innerHTML = '￥' + oldprice
+
+            }
+        }
+    
+    }
+
+    // #endregion
 
 }
 
