@@ -177,7 +177,7 @@ window.onload = function () {
         for (let i = 0; i < liNodes.length; i++) {
             liNodes[i].onclick = function () {
                 //    bigimgIndex = i
-                console.log(i);
+                // console.log(i);
 
                 // 变换小，大图路径
                 smallpic_img.src = imagessrc[i].s
@@ -424,7 +424,7 @@ window.onload = function () {
 
                     // 获取所有 a 标签元素，并且循环发生点击事件
                     const aNodes = document.querySelectorAll('#wrapper #content .contentMain #center .right .rightBottom .choose #mark a')
-                    console.log(aNodes);
+                    // console.log(aNodes);
                     for(let n = 0; n < aNodes.length; n++){
                         aNodes[n].onclick = function(){
                             // 获取点击的 a 标签身上的 index 属性值
@@ -534,9 +534,9 @@ window.onload = function () {
         const ipts = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .middle li input')
         const leftprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .left p')
         const newprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .right > i')
-        console.log(ipts);
-        console.log(leftprice);
-        console.log(newprice);
+        // console.log(ipts);
+        // console.log(leftprice);
+        // console.log(newprice);
 
 
         // 2. 遍历复选框
@@ -558,6 +558,95 @@ window.onload = function () {
         }
     
     }
+
+    // #endregion
+
+
+    // #region 封装一个公共的选项卡函数
+
+    /**
+     *  被点击的元素
+     * 被切换显示的元素
+     */
+
+    function Tab(tabBtns, tabConts){
+        for(let i = 0; i < tabBtns.length; i++){
+
+            tabBtns[i].index = i
+            tabBtns[i].onclick = function(){
+                for(let j = 0; j < tabBtns.length; j++){
+                    tabBtns[j].className = ''
+                    tabConts[j].className = ''
+                }
+                this.className = 'active'
+                tabConts[this.index].className = 'active'
+            }
+        }
+    }
+
+    // 点击左侧选项卡
+    leftTab()
+    function leftTab(){
+        // 被点击的元素
+        const h4 = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .leftAside .asideTop h4')
+       console.log(h4);
+        // 被切换显示的元素
+        const divs = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .leftAside .asideConcent>div')
+        console.log(divs)
+        // 调用函数
+        Tab(h4, divs)
+    }
+    // 点击右侧选项卡
+    rightTab()
+    function rightTab(){
+        // 被点击的元素
+        const lis = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .bottomDetail .tabBtns li')
+        console.log(lis);
+        // 被切换显示的元素
+        const divs = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .bottomDetail .tabConts>div')
+        console.log(divs)
+        // 调用函数
+        Tab(lis, divs)
+    }
+
+    // #endregion
+
+    // #region  右边侧边栏的点击效果
+    rightAsideBind()
+    function rightAsideBind(){
+        /**
+         * 思路
+         * 1. 先找到按钮元素，发生点击事件
+         * 2. 记录初始状态，在点击事件的内容进行判断,如果为关闭则展开（状态取反）
+         * 3. 如果为展开则设置按钮和侧边栏对应的class效果，关闭亦如此
+         */
+
+        const btns = document.querySelector('#wrapper .rightAside .btns')
+        const rightAside = document.querySelector('#wrapper .rightAside')
+        let flag = true //关闭
+        
+        
+        btns.addEventListener('click', function(){
+            // 判断
+            if(flag){
+                // 展开
+                // flag = false
+                rightAside.className = "rightAside asideOpen"
+                btns.className = "btns btnsOpen"
+               
+            }else{
+                // 关闭
+                // flag = true
+                rightAside.className = "rightAside asideClose"
+                btns.className = "btns btnsClose"
+              
+            }
+
+            // 无论前面的 if 和 else 执行的到底是谁，最终 flag 的状态都是在原来的基础之上进行取反
+            flag = !flag 
+        })
+    }
+
 
     // #endregion
 

@@ -644,40 +644,40 @@
                 .rightDetail {
                     float: right;
                     width: 980px;
-                    
+
                     //选择搭配区域
                     .chooseBox {
                         border: 1px solid #ddd;
                         margin-bottom: 15px;
-                
+
                         h4 {
                             border-bottom: 1px solid #ddd;
                             background: #f1f1f1;
                             color: #333;
                             padding: 5px 0 5px 15px;
                         }
-                
+
                         .listWrap {
                             height: 170px;
                             padding-top: 10px;
-                
+
                             .left {
                                 float: left;
                                 width: 127px;
                                 height: 165px;
                                 position: relative;
-                
+
                                 img {
                                     width: 87px;
                                     margin: 0 auto;
                                 }
-                
+
                                 p {
                                     color: #c81623;
                                     font-size: 16px;
                                     text-align: center;
                                 }
-                
+
                                 i {
                                     font-size: 16px;
                                     position: absolute;
@@ -685,48 +685,48 @@
                                     right: -25px;
                                 }
                             }
-                
+
                             .middle {
                                 float: left;
                                 width: 668px;
                                 height: 165px;
-                
+
                                 li {
                                     float: left;
                                     width: 127px;
                                     margin: 0 20px;
                                     text-align: center;
-                
+
                                     img {
                                         width: 120px;
                                         height: 130px;
                                     }
                                 }
                             }
-                
+
                             .right {
                                 float: left;
                                 border-left: 1px solid #ddd;
                                 width: 153px;
                                 height: 165px;
                                 padding-left: 20px;
-                
+
                                 >div {
                                     margin-top: 10px;
                                     margin-bottom: 10px;
                                 }
-                
+
                                 >p {
                                     font-weight: bold;
                                     margin-bottom: 10px;
                                 }
-                
+
                                 >i {
                                     font-size: 16px;
                                     color: #B1191A;
                                     margin-bottom: 10px;
                                 }
-                
+
                                 button {
                                     padding: 10px 25px;
                                     font-size: 16px;
@@ -743,6 +743,7 @@
                         .tabBtns {
                             background: #ededed;
                             .clearfix();
+
                             li {
                                 float: left;
                                 border: 1px solid #ddd;
@@ -752,29 +753,29 @@
                                 line-height: 40px;
                                 text-align: center;
                                 border-right: none;
-                    
+
                                 &:last-child {
                                     border-right: 1px solid #ddd;
                                 }
-                    
+
                                 &.active {
                                     background: red;
-                    
+
                                     a {
                                         color: #fff;
                                     }
                                 }
                             }
                         }
-                    
+
                         .tabConts {
                             >div {
                                 padding-left: 20px;
                                 display: none;
-                    
+
                                 &.active {
                                     display: block;
-                    
+
                                     li {
                                         margin: 10px 0;
                                     }
@@ -788,7 +789,103 @@
 
     }
 
-
-
     // 内容区域结束
+
+    // 右侧侧边栏开始
+
+    .rightAside {
+        width: 300px;
+        height: 100%;
+        background: #7a6e6e;
+        transition: 0.5s;
+        position: fixed;
+        top: 0;
+
+        &.asideClose {
+            right: -294px;
+        }
+
+        &.asideOpen {
+            right: 0px;
+        }
+
+        // 按钮区域
+        .btns {
+            width: 35px;
+            height: 35px;
+            background: #7a6e6e;
+            border-radius: 5px 0 0 5px;
+            top: 0;
+            left: -29px;
+            background-size: 35px 35px;
+            position: absolute;
+
+            &.btnsClose {
+                background-image: url('../images/list.png');
+            }
+
+            &.btnsOpen {
+                background-image: url('../images/cross.png');
+            }
+        }
+
+        // 侧边栏内容区域
+        .constent {
+            width: 294px;
+            background: bisque;
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            z-index: 50;
+        }
+
+        // 侧边导航
+        .navList {
+            position: absolute;
+            left: -29px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            li {
+                width: 35px;
+                height: 35px;
+                position: relative;
+
+                p {
+                    width: 35px;
+                    height: 35px;
+                    background: #7a6e6e;
+                    background-image: url('../images/toolbars.png');
+                    background-position: -87px -174px;
+                    transition: 0.5s;
+                }
+
+                i {
+                    width: 62px;
+                    height: 35px;
+                    text-align: center;
+                    line-height: 35px;
+                    position: absolute;
+                    left: 35px;
+                    transition: 0.5s;
+                    top: 0px;
+                    background: #7a6e6e;
+                }
+
+                &:hover {
+                    p {
+                        background-color: pink;
+                    }
+
+                    i {
+                        background-color: pink;
+                        left: -62px;
+                    }
+                }
+            }
+        }
+    }
+
+    // 右侧侧边栏结束
 }

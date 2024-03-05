@@ -622,3 +622,79 @@
 #wrapper #content .contentMain .goodsDetailWrap .rightDetail .bottomDetail .tabConts > div.active li {
   margin: 10px 0;
 }
+#wrapper .rightAside {
+  width: 300px;
+  height: 100%;
+  background: #7a6e6e;
+  transition: 0.5s;
+  position: fixed;
+  top: 0;
+}
+#wrapper .rightAside.asideClose {
+  right: -294px;
+}
+#wrapper .rightAside.asideOpen {
+  right: 0px;
+}
+#wrapper .rightAside .btns {
+  width: 35px;
+  height: 35px;
+  background: #7a6e6e;
+  border-radius: 5px 0 0 5px;
+  top: 0;
+  left: -29px;
+  background-size: 35px 35px;
+  position: absolute;
+}
+#wrapper .rightAside .btns.btnsClose {
+  background-image: url('../images/list.png');
+}
+#wrapper .rightAside .btns.btnsOpen {
+  background-image: url('../images/cross.png');
+}
+#wrapper .rightAside .constent {
+  width: 294px;
+  background: bisque;
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  z-index: 50;
+}
+#wrapper .rightAside .navList {
+  position: absolute;
+  left: -29px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#wrapper .rightAside .navList li {
+  width: 35px;
+  height: 35px;
+  position: relative;
+}
+#wrapper .rightAside .navList li p {
+  width: 35px;
+  height: 35px;
+  background: #7a6e6e;
+  background-image: url('../images/toolbars.png');
+  background-position: -87px -174px;
+  transition: 0.5s;
+}
+#wrapper .rightAside .navList li i {
+  width: 62px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  position: absolute;
+  left: 35px;
+  transition: 0.5s;
+  top: 0px;
+  background: #7a6e6e;
+}
+#wrapper .rightAside .navList li:hover p {
+  background-color: pink;
+}
+#wrapper .rightAside .navList li:hover i {
+  background-color: pink;
+  left: -62px;
+}
